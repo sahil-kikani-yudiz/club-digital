@@ -12,7 +12,8 @@ import DownloadIcon from '@/assets/icons/download-icon.svg'
 export default function FormSharePage() {
   return (
     <div className='bg-background w-screen h-[calc(100%-70px)] p-4'>
-      <div className='bg-theme h-[66px] border rounded-lg items-center justify-between flex p-2'>
+    
+      <div className='bg-theme  h-[66px] border rounded-lg items-center justify-between flex p-2'>
         <div className='flex   items-center'>
           <CustomLink href={'/en/builder'}>
             <CustomImage src={LeftArrow} height={22} width={22} />
@@ -26,8 +27,8 @@ export default function FormSharePage() {
         </Link>
       </div>
 
-      <div className='w-full h-[calc(100%-66px)] p-2 flex bg-theme border rounded-lg mt-3 justify-center'>
-        <div className='h-full w-[720px] justify-center flex flex-col items-center'>
+      <div className='w-full h-[calc(100%-76px)] overflow-auto p-2 flex bg-theme border rounded-lg mt-3 justify-center'>
+        <div className='h-full w-[720px] m-auto relative flex flex-col items-center'>
           <div>Share Form</div>
           <div className='h-full w-[710px] p-2'>
             <div className='w-full border rounded-lg h-fit p-4'>
@@ -80,6 +81,7 @@ export default function FormSharePage() {
           </div>
         </div>
       </div>
+  
     </div>
   )
 }
