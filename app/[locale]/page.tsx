@@ -19,7 +19,7 @@ export default function SignUpPage() {
         <div className='md:w-[562px] sm:w-fit h-fit p-4 '>
         <CommonInput register={register} placeholder='Enter Your Email' label='Email Address' name='sEmail' className='mb-2 p-3' type='email' />
         <CommonInput register={register} placeholder='Enter Password' label='Password' name='sEmail' className='mb-2 p-3' type='password' />
-        <Link href={'/en/dashboard'} ><button  className='w-full bg-primary-500 border rounded-lg text-theme p-4 text-xl mt-4'>Sign Up</button></Link>
+        <button  className='w-full bg-primary-500 border rounded-lg text-theme p-4 text-xl mt-4'>Sign Up</button>
         <div className='border rounded-lg p-4 mt-6 flex items-center justify-center'>
             <span>Already have an account??</span><Link href={'/en/dashboard'} className='text-primary-500 mx-2'>Login</Link>
         </div>
