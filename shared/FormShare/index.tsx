@@ -53,7 +53,7 @@ export default function FormSharePage({ id }: FormSharePage) {
                 <input
                   ref={linkRef}
                   type='text'
-                  value={`http://192.168.10.101:3000/en/myform/${id}`}
+                  value={`ttps://dynamic-form-create.vercel.app/en/myform/${id}`}
                   readOnly
                   className='outline-none border-none w-full bg-primary-200 p-4 border rounded-lg'
                 />
@@ -71,7 +71,7 @@ export default function FormSharePage({ id }: FormSharePage) {
               <Divider />
 
               <Canvas
-                text={`http://192.168.10.101:3000/en/myform/${id}`}
+                text={`ttps://dynamic-form-create.vercel.app/en/myform/${id}`}
                 options={{
                   errorCorrectionLevel: 'M',
                   margin: 5,
