@@ -1,70 +1,91 @@
 import { useForm } from 'react-hook-form'
 import CommonInput from '../ui/commonInput'
-import Divider from '../ui/divider'
-import CustomImage from '../ui/customImage'
-import FieldBottom from './fieldBottom'
-import { Fragment, useState } from 'react'
 import Dropdown from '../ui/dropdown'
 import RadioButton from '../ui/radioButton'
-import { useSortable } from '@dnd-kit/sortable'
-import { CSS } from '@dnd-kit/utilities'
-
-type FieldMakerTypes = {
-  field: any
+import CheckBox from '../ui/checkBox'
+import { validationErrors } from '../constants/validationError'
+type settingType = {
+  sLabel: string
+  aOptions: any
+  iUniqueId: string
+  sPlaceHolder: string
+  bIsRequired: boolean
+  nMaxLength: number
+  nMinLength: number
 }
 
-export default function FieldMaker({ field }: FieldMakerTypes) {
-  const {
-    control,
-    handleSubmit,
-    register,
-    formState: { errors }
-  } = useForm()
+type fieldTypes = {
+  oSettings: settingType
+  oField: any
+}
 
-  const { attributes, setNodeRef,listeners, transform, transition } = useSortable({
-    id: field.id
-  })
+type fieldMakerTypes = {
+  field: fieldTypes
+  register: Function
+  errors: Object
+  setValue?: Function
+}
 
-  const style = {
-     transform: CSS.Transform.toString(transform),
-     transition
-  }
+export default function FieldMaker({ field, register, errors, setValue }: fieldMakerTypes) {
+  const minLength = field?.oSettings?.nMinLength
+  const maxLength = field?.oSettings?.nMaxLength 
 
   return (
     <>
-      <div className='h-[186px] border-2 rounded-lg m-4 hover:border-primary-500 cursor-move' style={style} ref={setNodeRef} {...attributes} {...listeners}>
-        <div className='h-[135px] p-2 relative '>
-          {field.type === 'select' && (
-            <>
-              <label>{field?.oSettings?.label}</label>
-              <Dropdown options={field?.oSettings?.options} className='mt-2 ' />
-              <div className='absolute top-0 left-0 h-full w-full cursor-move'></div>
-            </>
-          )}
-          {field.subType === 'radio' && (
-            <>
-              <RadioButton options={field?.oSettings?.options} label={field?.oSettings?.label} />
-              <div className='absolute top-0 left-0 h-full w-full cursor-move'></div>
-            </>
-          )}
-          {(field.type === 'input' || field.type === 'textarea') && field?.subType !== 'radio' && field && (
-            <>
-              <CommonInput
-                className='mt-4 '
-                disabled
-                label={field.oSettings.label}
-                type={field.type === 'input' ? field?.subType : field?.type}
-                register={register}
-                name='sTitle'
-                placeholder={field.oSettings.placeholder}
-              />
-              <div className='absolute top-0 left-0 h-full w-full cursor-move'></div>
-            </>
-          )}
-        </div>
-        <Divider />
-        <FieldBottom />
-      </div>
+      {field?.oField?.oFieldType?.sType === 'select' && (
+        <>
+          <label className='text-secondary-500'>{field?.oSettings?.sLabel}</label>
+          <Dropdown options={field?.oSettings?.aOptions} className='mt-2 ' />
+        </>
+      )}
+      {field?.oField?.oFieldType?.sType === 'radio' && (
+        <>
+          <RadioButton
+            register={register}
+            key={field?.oSettings?.iUniqueId}
+            id={field?.oSettings?.iUniqueId}
+            options={field?.oSettings?.aOptions}
+            label={field?.oSettings?.sLabel}
+          />
+        </>
+      )}
+
+      {field?.oField?.oFieldType?.sType === 'checkbox' && (
+        <>
+          <CheckBox
+            key={field?.oSettings?.iUniqueId}
+            register={register}
+            options={field?.oSettings?.aOptions}
+            label={field?.oSettings?.sLabel}
+            id={field?.oSettings?.iUniqueId}
+            setValue={setValue}
+            // required={field?.oSettings?.bIsRequired}
+          />
+        </>
+      )}
+      {(field?.oField?.oFieldType?.sParentType === 'input' || field?.oField?.oFieldType?.sType === 'textarea') &&
+        field?.oField?.oFieldType?.sType !== 'radio' &&
+        field?.oField?.oFieldType?.sType !== 'checkbox' && (
+          <>
+            <CommonInput
+              className='mt-4 '
+              label={field?.oSettings?.sLabel}
+              type={field?.oField?.oFieldType?.sType}
+              register={register}
+              required={field?.oSettings?.bIsRequired}
+              name={`oAnswers.${field?.oSettings?.iUniqueId}`}
+              placeholder={field?.oSettings?.sPlaceHolder}
+              validation={{
+                maxLength: { value: maxLength, message: validationErrors.maxLength(maxLength) },
+                minLength: { value: minLength, message: validationErrors.maxLength(minLength) }
+              }}
+              errors={errors}
+            />
+          </>
+        )}
+      {/* <button type='submit' onClick={handleSubmit(onSubmit)}>
+        Submit
+      </button> */}
     </>
   )
 }

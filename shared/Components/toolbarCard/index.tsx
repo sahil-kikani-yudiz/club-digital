@@ -1,8 +1,8 @@
 import CustomImage from '@/shared/ui/customImage'
 import profile from '@/assets/icons/profile-icon.svg'
 import { useDraggable } from '@dnd-kit/core'
-import { CSS } from '@dnd-kit/utilities'
-import { SortableContext, useSortable } from '@dnd-kit/sortable'
+
+
 
 type ToolbarCardOptions = {
   field?: {
@@ -16,7 +16,7 @@ type ToolbarCardOptions = {
 
 export default function ToolbarCard({ field }: ToolbarCardOptions) {
 
-  const { attributes, listeners, setNodeRef, isDragging, transform } = useDraggable({
+  const { attributes, listeners, setNodeRef } = useDraggable({
     id: field?._id ?? 'default-id',
     data: field    
   })

@@ -1,26 +1,14 @@
-import { useTranslations } from 'next-intl'
-import CustomImage from '@/shared/ui/customImage'
-import SearchIcon from '@/assets/icons/search-icon.svg'
 import { useState } from 'react'
 import Divider from '@/shared/ui/divider'
 import ToolbarCard from '../toolbarCard'
-import { getToolList } from '@/query/toolbar/toolbar.query'
-import { useQuery } from '@tanstack/react-query'
 import Accordion from '@/shared/ui/accordian'
-import { SortableContext } from '@dnd-kit/sortable'
 
-export default function Toolbar() {
+
+export default function Toolbar({toolList} : any) {
   const [value, setValue] = useState('')
-
-  const { data, isFetching } = useQuery<any>({
-    queryKey: ['getToll'],
-    queryFn: () => getToolList(),
-    select: (data) => data?.data?.data,
-    staleTime: 5000
-  })
-
+ 
   const onDragStart = () => {
-    // console.log('Dragging started')
+    
   }
 
   function ToolListing(data: []) {
@@ -65,8 +53,7 @@ export default function Toolbar() {
         />
       </div>
       <Divider />
-      {data?.map((item: any, index: number) => {
-        // console.log(item, 'item')
+      {toolList?.map((item: any, index: number) => {
         return (
           <div key={index}>
             <Accordion title={item?.sName} body={ToolListing(item?.aFields)} />

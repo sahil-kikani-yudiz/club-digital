@@ -8,5 +8,5 @@ type paramsType = {
 }
 
 export function getToolList() {
-  return Axios.get(`/category/list`)
+  return Axios.get(`manager/category/list`)
 }

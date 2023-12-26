@@ -1,10 +1,14 @@
-import { useState } from 'react'
+import { ReactNode, useState } from 'react'
 import CustomImage from '../customImage'
 import DownIcon from '@/assets/icons/down-icon.svg'
 import Dropdown from '../dropdown'
 
-export default function DataTable() {
-  const columns = [{ title: 'Form name' }, { title: 'Last modified' }, { title: 'Responses' }, { title: 'Actions' }]
+type dataTableTypes = {
+  children?: ReactNode
+}
+
+export default function DataTable({ children }: dataTableTypes) {
+  const columns = [{ title: 'Form name' },{ title: 'Description' }, { title: 'CreatedAt' }, { title: 'Responses' }, { title: 'Actions' }]
 
   const [value, setValue] = useState('')
 
@@ -14,11 +18,11 @@ export default function DataTable() {
     setSelectedOption(e.target.value)
   }
 
-  const options = [{ name: 'All Form' }, { name: 'Draft' }, { name: 'Delete' }]
+  const options = [{ sValue: 'All Form', isSelected: true }, { sValue: 'Draft' }, { sValue: 'Delete' }]
 
   return (
-    <div className='w-full h-full p-4'>
-      <div className='flex justify-between p-4'>
+    <>
+      <div className='flex justify-between p-4 w-full'>
         <div className='w-[200px] z-10'>
           <Dropdown options={options} />
         </div>
@@ -52,95 +56,25 @@ export default function DataTable() {
           />
         </div>
       </div>
-
-      <div className='relative shadow-md  w-full h-ful'>
-        <table className='w-full text-left '>
-          <thead className='text-xs text-secondary-500 h-[56px] uppercase bg-tableBg'>
-            <tr>
-              {columns?.map((column, i) => {
-                return (
-                  <th key={i} className='px-6 py-3'>
-                    {column.title}
-                  </th>
-                )
-              })}
-            </tr>
-          </thead>
-          <tbody className='bg-theme'>
-            <tr className='bg-white border-b  hover:bg-gray-50 '>
-              <td className='px-6 py-4 '>Form 1</td>
-              <td className='px-6 py-4'>Dec 18, 2023 9:50 AM</td>
-              <td className='px-6 py-4'>150</td>
-              <td className='px-6 py-4'>
-                <a href='#' className='font-medium text-blue-600 dark:text-blue-500 hover:underline'>
-                  Edit
-                </a>
-              </td>
-            </tr>
-            <tr className='bg-white border-b  hover:bg-gray-50 '>
-              <td className='px-6 py-4 '>Form 1</td>
-              <td className='px-6 py-4'>Dec 18, 2023 9:50 AM</td>
-              <td className='px-6 py-4'>150</td>
-              <td className='px-6 py-4'>
-                <a href='#' className='font-medium text-blue-600 dark:text-blue-500 hover:underline'>
-                  Edit
-                </a>
-              </td>
-            </tr>
-            <tr className='bg-white border-b  hover:bg-gray-50 '>
-              <td className='px-6 py-4 '>Form 1</td>
-              <td className='px-6 py-4'>Dec 18, 2023 9:50 AM</td>
-              <td className='px-6 py-4'>150</td>
-              <td className='px-6 py-4'>
-                <a href='#' className='font-medium text-blue-600 dark:text-blue-500 hover:underline'>
-                  Edit
-                </a>
-              </td>
-            </tr>
-            <tr className='bg-white border-b  hover:bg-gray-50 '>
-              <td className='px-6 py-4 '>Form 1</td>
-              <td className='px-6 py-4'>Dec 18, 2023 9:50 AM</td>
-              <td className='px-6 py-4'>150</td>
-              <td className='px-6 py-4'>
-                <a href='#' className='font-medium text-blue-600 dark:text-blue-500 hover:underline'>
-                  Edit
-                </a>
-              </td>
-            </tr>
-            <tr className='bg-white border-b  hover:bg-gray-50 '>
-              <td className='px-6 py-4 '>Form 1</td>
-              <td className='px-6 py-4'>Dec 18, 2023 9:50 AM</td>
-              <td className='px-6 py-4'>150</td>
-              <td className='px-6 py-4'>
-                <a href='#' className='font-medium text-blue-600 dark:text-blue-500 hover:underline'>
-                  Edit
-                </a>
-              </td>
-            </tr>
-            <tr className='bg-white border-b  hover:bg-gray-50 '>
-              <td className='px-6 py-4 '>Form 1</td>
-              <td className='px-6 py-4'>Dec 18, 2023 9:50 AM</td>
-              <td className='px-6 py-4'>150</td>
-              <td className='px-6 py-4'>
-                <a href='#' className='font-medium text-blue-600 dark:text-blue-500 hover:underline'>
-                  Edit
-                </a>
-              </td>
-            </tr>
-            <tr className='bg-white border-b  hover:bg-gray-50 '>
-              <td className='px-6 py-4 '>Form 1</td>
-              <td className='px-6 py-4'>Dec 18, 2023 9:50 AM</td>
-              <td className='px-6 py-4'>150</td>
-              <td className='px-6 py-4'>
-                <a href='#' className='font-medium text-blue-600 dark:text-blue-500 hover:underline'>
-                  Edit
-                </a>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+      <div className='w-full h-full overflow-y-auto p-4'>
+        <div className='relative shadow-md  w-full h-ful'>
+          <table className='w-full h-full text-left '>
+            <thead className='text-xs text-secondary-500 h-[56px] uppercase bg-tableBg'>
+              <tr>
+                {columns?.map((column, i) => {
+                  return (
+                    <th key={i} className='px-6 py-3'>
+                      {column.title}
+                    </th>
+                  )
+                })}
+              </tr>
+            </thead>
+            <tbody className='bg-theme h-full'>{children}</tbody>
+          </table>
+        </div>
       </div>
-      <nav className='flex items-center flex-column flex-wrap md:flex-row justify-between pt-4' aria-label='Table navigation '>
+      <div className='flex w-full  items-center flex-column flex-wrap md:flex-row justify-between p-7'>
         <span className='text-sm font-normal text-gray-500 mb-4 md:mb-0 block w-full md:inline md:w-auto'>
           page <span className='font-semibold text-gray-900'>1</span> of <span className='font-semibold text-gray-900 '>10</span>
         </span>
@@ -182,7 +116,7 @@ export default function DataTable() {
             </a>
           </li>
         </ul>
-      </nav>
-    </div>
+      </div>
+    </>
   )
 }

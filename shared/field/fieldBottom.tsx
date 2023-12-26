@@ -2,7 +2,11 @@ import CustomImage from "../ui/customImage";
 import CopyIcon from '@/assets/icons/copy-icon.svg'
 import DeleteIcon from '@/assets/icons/delete-icon.svg'
 
-export default function FieldBottom() {
+type FieldBottomType = {
+  onFieldEdit?: Function
+}
+
+export default function FieldBottom({ onFieldEdit } : FieldBottomType) {
     return(
         <div className='w-full flex justify-between p-1  cursor-pointer mt-1'>
         <div className='w-[108px] text-sm justify-center items-center border flex rounded-lg p-1 mx-2 relative hover:bg-background'>
